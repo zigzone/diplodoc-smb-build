@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    container_name: diplodoc_serv
+    volumes:
+      - ./docs:/app/docs
+      - ./docs-html:/app/docs-html
+      - ./smb.conf:/etc/smb.conf
+    ports:
+      - "3000:8000"
+      - "139:139"
+      - "445:445"
+      # EXPOSE 139 445 # Порты для SMB/Samba
+    command: sh -c "service smbd start && npm start"
+    networks:
+        - diplodoc
+
+networks:
+  diplodoc:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.57.0/24
