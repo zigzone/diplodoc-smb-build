@@ -5,11 +5,11 @@ services:
     build: .
     container_name: diplodoc_serv
     volumes:
-      - ./docs:/app/docs
-      - ./docs-html:/app/docs-html
+      - doc-src:/app/docs
+      - doc-html:/app/docs-html
       - ./smb.conf:/etc/smb.conf
     ports:
-      - "3000:8000"
+      - "3100:8000"
       - "139:139"
       - "445:445"
       # EXPOSE 139 445 # Порты для SMB/Samba
@@ -23,3 +23,7 @@ networks:
     ipam:
       config:
         - subnet: 172.16.57.0/24
+
+volumes:
+  doc-html:
+  doc-src:
